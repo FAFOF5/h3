@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الرياضيات التفاعلي - الجزء الثالث (التكرار والإتقان)</title>
+    <!-- Google Fonts for typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --accent: #4f46e5;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --warning: #d97706;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px 12px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        /* Top Header Card */
+        .quiz-header {
+            background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
+            color: white;
+            padding: 32px 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .quiz-title {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .quiz-subtitle {
+            font-size: 15px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .student-info {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px 16px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+        }
+
+        .student-info label {
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .student-info input {
+            width: 100%;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        /* Sticky Progress Bar */
+        .progress-card {
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            background: var(--card-bg);
+            padding: 14px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4f46e5, #16a34a);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        /* Section Cards */
+        .section-header {
+            background: #0f172a;
+            color: white;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-tag {
+            background: rgba(255, 255, 255, 0.2);
+            font-size: 13px;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: border-color 0.2s;
+        }
+
+        .question-card:hover {
+            border-color: #cbd5e1;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .question-num {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 800;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 15px;
+        }
+
+        .question-text {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-main);
+            padding-top: 2px;
+        }
+
+        .math-expr {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            direction: ltr;
+            display: inline-block;
+            font-weight: bold;
+            color: #0f172a;
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 1.05em;
+        }
+
+        /* Options Grid / List */
+        .options-container {
+            display: grid;
+            gap: 10px;
+        }
+
+        .options-grid-2x2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #fafafa;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .option-label input[type="radio"] {
+            margin-left: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .option-text {
+            font-size: 15px;
+            font-weight: 500;
+            flex-grow: 1;
+        }
+
+        /* Feedback Box */
+        .feedback-box {
+            margin-top: 16px;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback-box.correct {
+            display: block;
+            background: var(--success-light);
+            border: 1px solid #bbf7d0;
+            color: #15803d;
+        }
+
+        .feedback-box.incorrect {
+            display: block;
+            background: var(--danger-light);
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+        }
+
+        .explanation {
+            margin-top: 8px;
+            font-weight: 500;
+            line-height: 1.5;
+            color: #334155;
+            background: rgba(255, 255, 255, 0.75);
+            padding: 10px;
+            border-radius: 8px;
+            border-right: 4px solid var(--primary);
+        }
+
+        .btn-check-item {
+            margin-top: 12px;
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-check-item:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Action Buttons */
+        .actions-footer {
+            margin-top: 32px;
+            margin-bottom: 48px;
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            padding: 16px 36px;
+            font-size: 18px;
+            font-weight: 800;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(22, 163, 74, 0.3);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.3);
+        }
+
+        /* Result Banner */
+        .result-banner {
+            display: none;
+            background: white;
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--primary);
+            margin-bottom: 32px;
+            animation: bounceIn 0.5s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            70% { transform: scale(1.02); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        .result-score {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 12px 0;
+        }
+
+        .result-message {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 16px;
+        }
+
+        .stars {
+            font-size: 32px;
+            color: #f59e0b;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .options-grid-2x2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header Card -->
+    <header class="quiz-header">
+        <h1 class="quiz-title">📝 نموذج الرياضيات التفاعلي - الجزء الثالث</h1>
+        <p class="quiz-subtitle">اختبر نفسك وتدرب مع شرح الخطوات والتكرار حتى تتقن جميع أسئلة النموذج!</p>
+        <div class="student-info">
+            <label for="studentName">اسم الطالب:</label>
+            <input type="text" id="studentName" placeholder="اكتب اسمك هنا للبدء..." value="محمد">
+        </div>
+    </header>
+
+    <!-- Progress Indicator -->
+    <div class="progress-card">
+        <span class="progress-text">التقدم: <span id="answeredCount">0</span> / 14 سؤالاً</span>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <span class="progress-text" id="scoreDisplay">الدرجة: -</span>
+    </div>
+
+    <!-- Final Result Banner -->
+    <div class="result-banner" id="resultBanner">
+        <div class="stars" id="resultStars">⭐⭐⭐⭐⭐</div>
+        <h2 class="result-message" id="resultMsg">ممتاز جداً! أداء رائع!</h2>
+        <div class="result-score" id="finalScore">14 / 14</div>
+        <p id="resultDetail">لقد أجبت على جميع الأسئلة بنجاح. يمكنك إعادة الاختبار لمزيد من التثبيت والإتقان!</p>
+        <button class="btn-action btn-reset" style="margin-top:20px;" onclick="resetQuiz()">🔄 إعادة الاختبار للتكرار والإتقان</button>
+    </div>
+
+    <form id="quizForm" onsubmit="return false;">
+
+        <!-- SECTION 1: True/False -->
+        <div class="section-header">
+            <span>السؤال الأول: ضع علامة (✓) أمام العبارة الصحيحة وعلامة (✗) أمام العبارة الخاطئة</span>
+            <span class="section-tag">5 فقرات - (5 درجات)</span>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-card" id="qCard-q1">
+            <div class="question-header">
+                <div class="question-num">1</div>
+                <div class="question-text">
+                    المعادلة <span class="math-expr">3س + 7ص³ = 4</span> تمثل معادلة خطية.
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q1" value="TRUE" onchange="updateProgress()">
+                    <span class="option-text">✓ عبارة صحيحة</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="FALSE" onchange="updateProgress()">
+                    <span class="option-text">✗ عبارة خاطئة</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q1')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q1"></div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card" id="qCard-q2">
+            <div class="question-header">
+                <div class="question-num">2</div>
+                <div class="question-text">
+                    الصورة القياسية لمعادلة المستقيم: <span class="math-expr">ص + 3 = -4(س - 6)</span> هي <span class="math-expr">4س + ص = 27</span>.
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q2" value="TRUE" onchange="updateProgress()">
+                    <span class="option-text">✓ عبارة صحيحة</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="FALSE" onchange="updateProgress()">
+                    <span class="option-text">✗ عبارة خاطئة</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q2')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q2"></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card" id="qCard-q3">
+            <div class="question-header">
+                <div class="question-num">3</div>
+                <div class="question-text">
+                    أساس المتتابعة الحسابية <span class="math-expr">2 , 14 , 26 , ...</span> هو <span class="math-expr">7</span>.
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q3" value="TRUE" onchange="updateProgress()">
+                    <span class="option-text">✓ عبارة صحيحة</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="FALSE" onchange="updateProgress()">
+                    <span class="option-text">✗ عبارة خاطئة</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q3')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q3"></div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-card" id="qCard-q4">
+            <div class="question-header">
+                <div class="question-num">4</div>
+                <div class="question-text">
+                    ميل المستقيم المار بالنقطتين <span class="math-expr">(3, 5)</span> و <span class="math-expr">(4, 9)</span> يساوي <span class="math-expr">4</span>.
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q4" value="TRUE" onchange="updateProgress()">
+                    <span class="option-text">✓ عبارة صحيحة</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q4" value="FALSE" onchange="updateProgress()">
+                    <span class="option-text">✗ عبارة خاطئة</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q4')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q4"></div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-card" id="qCard-q5">
+            <div class="question-header">
+                <div class="question-num">5</div>
+                <div class="question-text">
+                    المعادلة <span class="math-expr">7س + 3 = 8س + 3</span> تمثل متطابقة.
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q5" value="TRUE" onchange="updateProgress()">
+                    <span class="option-text">✓ عبارة صحيحة</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q5" value="FALSE" onchange="updateProgress()">
+                    <span class="option-text">✗ عبارة خاطئة</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q5')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q5"></div>
+        </div>
+
+
+        <!-- SECTION 2: Matching / Multiple Choice -->
+        <div class="section-header">
+            <span>السؤال الثاني: اختر القيمة المناسبة لكل عبارة</span>
+            <span class="section-tag">4 فقرات - (4 درجات)</span>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-card" id="qCard-q6">
+            <div class="question-header">
+                <div class="question-num">1</div>
+                <div class="question-text">
+                    قيمة العبارة: <span class="math-expr">|هـ - 4| + 3</span> إذا كانت <span class="math-expr">هـ = 8</span> هي:
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q6" value="A" onchange="updateProgress()">
+                    <span class="option-text">أ) 7</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q6" value="B" onchange="updateProgress()">
+                    <span class="option-text">ب) 4</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q6" value="C" onchange="updateProgress()">
+                    <span class="option-text">ج) 9</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q6" value="D" onchange="updateProgress()">
+                    <span class="option-text">د) 6</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q6')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q6"></div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-card" id="qCard-q7">
+            <div class="question-header">
+                <div class="question-num">2</div>
+                <div class="question-text">
+                    المقطع السيني للمعادلة <span class="math-expr">3س - 4ص = 12</span> هو:
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q7" value="A" onchange="updateProgress()">
+                    <span class="option-text">أ) 4</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q7" value="B" onchange="updateProgress()">
+                    <span class="option-text">ب) 7</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q7" value="C" onchange="updateProgress()">
+                    <span class="option-text">ج) 9</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q7" value="D" onchange="updateProgress()">
+                    <span class="option-text">د) 6</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q7')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q7"></div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-card" id="qCard-q8">
+            <div class="question-header">
+                <div class="question-num">3</div>
+                <div class="question-text">
+                    قيمة الدالة <span class="math-expr">د(س) = 2س + 3</span> عندما <span class="math-expr">س = 3</span> هي:
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q8" value="A" onchange="updateProgress()">
+                    <span class="option-text">أ) 9</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q8" value="B" onchange="updateProgress()">
+                    <span class="option-text">ب) 7</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q8" value="C" onchange="updateProgress()">
+                    <span class="option-text">ج) 4</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q8" value="D" onchange="updateProgress()">
+                    <span class="option-text">د) 6</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q8')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q8"></div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-card" id="qCard-q9">
+            <div class="question-header">
+                <div class="question-num">4</div>
+                <div class="question-text">
+                    حل المعادلة الخطية التي تمر بالنقطة <span class="math-expr">(6, 0)</span> هو:
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q9" value="A" onchange="updateProgress()">
+                    <span class="option-text">أ) 6</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q9" value="B" onchange="updateProgress()">
+                    <span class="option-text">ب) 4</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q9" value="C" onchange="updateProgress()">
+                    <span class="option-text">ج) 7</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q9" value="D" onchange="updateProgress()">
+                    <span class="option-text">د) 9</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q9')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q9"></div>
+        </div>
+
+
+        <!-- SECTION 3: Fill-in / Multiple Choice -->
+        <div class="section-header">
+            <span>السؤال الثالث: أكمل الفراغات اختيارياً</span>
+            <span class="section-tag">5 فقرات - (5 درجات)</span>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-card" id="qCard-q10">
+            <div class="question-header">
+                <div class="question-num">1</div>
+                <div class="question-text">
+                    مجموعة حل المعادلة: <span class="math-expr">10ص - 2 = 8ص + 18</span> هو:
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q10" value="A" onchange="updateProgress()">
+                    <span class="option-text">أ) ص = 10</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q10" value="B" onchange="updateProgress()">
+                    <span class="option-text">ب) ص = 8</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q10" value="C" onchange="updateProgress()">
+                    <span class="option-text">ج) ص = 20</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q10" value="D" onchange="updateProgress()">
+                    <span class="option-text">د) ص = -10</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q10')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q10"></div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-card" id="qCard-q11">
+            <div class="question-header">
+                <div class="question-num">2</div>
+                <div class="question-text">
+                    مجموعة حل المعادلة: <span class="math-expr">|7س - 9| = -6</span> هي:
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q11" value="A" onchange="updateProgress()">
+                    <span class="option-text">أ) ∅ (المجموعة الخالية)</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q11" value="B" onchange="updateProgress()">
+                    <span class="option-text">ب) { 3 }</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q11" value="C" onchange="updateProgress()">
+                    <span class="option-text">ج) { -3 }</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q11" value="D" onchange="updateProgress()">
+                    <span class="option-text">د) { 0 }</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q11')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q11"></div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-card" id="qCard-q12">
+            <div class="question-header">
+                <div class="question-num">3</div>
+                <div class="question-text">
+                    قيمة المتغير <span class="math-expr">ل</span> التي تجعل المعادلة <span class="math-expr">(2/3) ل = 10</span> صحيحة هي:
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q12" value="A" onchange="updateProgress()">
+                    <span class="option-text">أ) ل = 15</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q12" value="B" onchange="updateProgress()">
+                    <span class="option-text">ب) ل = 10</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q12" value="C" onchange="updateProgress()">
+                    <span class="option-text">ج) ل = 20</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q12" value="D" onchange="updateProgress()">
+                    <span class="option-text">د) ل = 30</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q12')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q12"></div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-card" id="qCard-q13">
+            <div class="question-header">
+                <div class="question-num">4</div>
+                <div class="question-text">
+                    يزداد ضغط الهواء مع ازدياد درجة الحرارة، المتغير المستقل هو:
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q13" value="A" onchange="updateProgress()">
+                    <span class="option-text">أ) درجة الحرارة</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q13" value="B" onchange="updateProgress()">
+                    <span class="option-text">ب) ضغط الهواء</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q13" value="C" onchange="updateProgress()">
+                    <span class="option-text">ج) حجم الهواء</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q13')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q13"></div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-card" id="qCard-q14">
+            <div class="question-header">
+                <div class="question-num">5</div>
+                <div class="question-text">
+                    إذا كان ميل المستقيم المار بالنقطتين <span class="math-expr">(ك, 5)</span> و <span class="math-expr">(س, 7)</span> غير معرّف فإن <span class="math-expr">ك =</span> :
+                </div>
+            </div>
+            <div class="options-container options-grid-2x2">
+                <label class="option-label">
+                    <input type="radio" name="q14" value="A" onchange="updateProgress()">
+                    <span class="option-text">أ) س</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q14" value="B" onchange="updateProgress()">
+                    <span class="option-text">ب) 5</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q14" value="C" onchange="updateProgress()">
+                    <span class="option-text">ج) 7</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q14" value="D" onchange="updateProgress()">
+                    <span class="option-text">د) 0</span>
+                </label>
+            </div>
+            <button type="button" class="btn-check-item" onclick="checkSingle('q14')">💡 تحقق من الإجابة والتوضيح</button>
+            <div class="feedback-box" id="feedback-q14"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="actions-footer">
+            <button type="button" class="btn-action btn-submit" onclick="submitQuiz()">✅ تسليم الاختبار وعرض النتيجة النهائيّة</button>
+            <button type="button" class="btn-action btn-reset" onclick="resetQuiz()">🔄 إعادة المحاولة للتدريب والاتقان</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    // Answer Key & Explanations for Page 3
+    const quizData = {
+        q1: {
+            correct: 'FALSE',
+            explain: 'خطأ! المعادلة ليست خطية لوجود الأس 3 على المتغير ص (ص³)، بينما المعادلة الخطية تكون متسغيراتها من الدرجة الأولى فقط.'
+        },
+        q2: {
+            correct: 'FALSE',
+            explain: 'خطأ! التبسيط الصحيح: ص + 3 = -4س + 24 ⇐ 4س + ص = 24 - 3 = 21 (وليس 27).'
+        },
+        q3: {
+            correct: 'FALSE',
+            explain: 'خطأ! الأساس هو الفرق بين أي حدين متتاليين: 14 - 2 = 12 (وليس 7).'
+        },
+        q4: {
+            correct: 'TRUE',
+            explain: 'صحيح! الميل م = (ص2 - ص1) ÷ (س2 - س1) = (9 - 5) ÷ (4 - 3) = 4 ÷ 1 = 4.'
+        },
+        q5: {
+            correct: 'FALSE',
+            explain: 'خطأ! التبسيط يعطي 7س = 8س ⇐ س = 0. فلها حل واحد فقط ولا تمثل متطابقة (المتطابقة تتساوى لجميع قيم س).'
+        },
+        q6: {
+            correct: 'A',
+            explain: 'بالتعويض بقيمة هـ = 8: |8 - 4| + 3 = |4| + 3 = 4 + 3 = 7.'
+        },
+        q7: {
+            correct: 'A',
+            explain: 'لإيجاد المقطع السيني نضع ص = 0: 3س - 4(0) = 12 ⇐ 3س = 12 ⇐ س = 4.'
+        },
+        q8: {
+            correct: 'A',
+            explain: 'بالتعويض بـ س = 3: د(3) = 2(3) + 3 = 6 + 3 = 9.'
+        },
+        q9: {
+            correct: 'A',
+            explain: 'النقطة (6, 0) تعني أن المقطع السيني (جذر المعادلة أو حلها الصفري) هو س = 6.'
+        },
+        q10: {
+            correct: 'A',
+            explain: 'بنقل المتغيرات في طرف والأعداد في طرف: 10ص - 8ص = 18 + 2 ⇐ 2ص = 20 ⇐ ص = 10.'
+        },
+        q11: {
+            correct: 'A',
+            explain: 'القيمة المطلقة دائماً أكبر من أو تساوي الصفر ولا يمكن أن تساوي عدداً سالباً (-6)، لذا مجموعة الحل هي المجموعة الخالية ∅.'
+        },
+        q12: {
+            correct: 'A',
+            explain: 'بالضرب في المعكوس الضربي (3/2): ل = 10 × (3/2) = 30 ÷ 2 = 15.'
+        },
+        q13: {
+            correct: 'A',
+            explain: 'درجة الحرارة هي التي تتغير أولاً فيتأثر بها الضغط، لذا فإن درجة الحرارة هي المتغير المستقل وضغط الهواء هو المتغير التابع.'
+        },
+        q14: {
+            correct: 'A',
+            explain: 'يكون الميل غير معرّف عندما يكون المقام في قانون الميل مساوياً للصفر (س - ك = 0)، وهذا يعني أن ك = س (مستقيم رأسي).'
+        }
+    };
+
+    const totalQuestions = 14;
+
+    function updateProgress() {
+        let answered = 0;
+        for (let i = 1; i <= totalQuestions; i++) {
+            const qKey = 'q' + i;
+            const selected = document.querySelector(`input[name="${qKey}"]:checked`);
+            if (selected) answered++;
+        }
+        document.getElementById('answeredCount').innerText = answered;
+        const percent = Math.round((answered / totalQuestions) * 100);
+        document.getElementById('progressBar').style.width = percent + '%';
+    }
+
+    function checkSingle(qKey) {
+        const selected = document.querySelector(`input[name="${qKey}"]:checked`);
+        const feedbackEl = document.getElementById(`feedback-${qKey}`);
+        const data = quizData[qKey];
+
+        if (!selected) {
+            feedbackEl.className = 'feedback-box incorrect';
+            feedbackEl.innerHTML = '⚠️ الرجاء اختيار إجابة أولاً للتحقق!';
+            return;
+        }
+
+        if (selected.value === data.correct) {
+            feedbackEl.className = 'feedback-box correct';
+            feedbackEl.innerHTML = `🎉 <strong>إجابة صحيحة! أحسنت!</strong><div class="explanation">💡 <strong>الشرح وتفاصيل الحل:</strong><br>${data.explain}</div>`;
+        } else {
+            feedbackEl.className = 'feedback-box incorrect';
+            feedbackEl.innerHTML = `❌ <strong>إجابة غير صحيحة. حاول مرة أخرى!</strong><div class="explanation">💡 <strong>التوضيح وفكرة الحل:</strong><br>${data.explain}</div>`;
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        let answered = 0;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const qKey = 'q' + i;
+            const selected = document.querySelector(`input[name="${qKey}"]:checked`);
+            const data = quizData[qKey];
+            const feedbackEl = document.getElementById(`feedback-${qKey}`);
+
+            if (selected) {
+                answered++;
+                if (selected.value === data.correct) {
+                    score++;
+                    feedbackEl.className = 'feedback-box correct';
+                    feedbackEl.innerHTML = `🎉 <strong>إجابة صحيحة!</strong><div class="explanation">💡 ${data.explain}</div>`;
+                } else {
+                    feedbackEl.className = 'feedback-box incorrect';
+                    feedbackEl.innerHTML = `❌ <strong>إجابة خاطئة.</strong><div class="explanation">💡 ${data.explain}</div>`;
+                }
+            } else {
+                feedbackEl.className = 'feedback-box incorrect';
+                feedbackEl.innerHTML = `⚠️ لم يتم الإجابة على هذا السؤال.<div class="explanation">💡 ${data.explain}</div>`;
+            }
+        }
+
+        const name = document.getElementById('studentName').value.trim() || 'الطالب';
+        const banner = document.getElementById('resultBanner');
+        const scoreDisplay = document.getElementById('finalScore');
+        const msgDisplay = document.getElementById('resultMsg');
+        const starsDisplay = document.getElementById('resultStars');
+        const detailDisplay = document.getElementById('resultDetail');
+
+        scoreDisplay.innerText = `${score} / ${totalQuestions}`;
+        document.getElementById('scoreDisplay').innerText = `الدرجة: ${score} / ${totalQuestions}`;
+
+        const percentage = (score / totalQuestions) * 100;
+
+        if (percentage === 100) {
+            starsDisplay.innerText = '⭐⭐⭐⭐⭐';
+            msgDisplay.innerText = `بطل الرياضيات! أداء ممتاز جداً يا ${name}! 🏆`;
+            detailDisplay.innerText = 'ما شاء الله! أتقنت جميع أسئلة هذا النموذج بنسبة 100%. أهنئك على هذا المستوى العالي!';
+        } else if (percentage >= 75) {
+            starsDisplay.innerText = '⭐⭐⭐⭐';
+            msgDisplay.innerText = `رائع جداً يا ${name}! إنجاز ممتااااز! 👍`;
+            detailDisplay.innerText = 'اجتزت معظم الأسئلة بنجاح. راجع التوضيحات المكتوبة تحت الأخطاء وأعد المحاولة للوصول للدرجة الكاملة.';
+        } else if (percentage >= 50) {
+            starsDisplay.innerText = '⭐⭐⭐';
+            msgDisplay.innerText = `جهد طيب يا ${name}! واصل المحاولة! 💪`;
+            detailDisplay.innerText = 'أنت في طريقك للإتقان. اقرأ الشرح والخطوات الموضحة ثم اضغط "إعادة المحاولة" لتكرار الاختبار.';
+        } else {
+            starsDisplay.innerText = '⭐⭐';
+            msgDisplay.innerText = `لا تستسلم يا ${name}! بالتكرار يسهل الصعب! 🚀`;
+            detailDisplay.innerText = 'اقرأ شرح وإجابة كل سؤال بتمعن ثم حاول مجدداً، وستتمكن منها بسهولة إن شاء الله!';
+        }
+
+        banner.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetQuiz() {
+        document.getElementById('quizForm').reset();
+
+        const feedbacks = document.querySelectorAll('.feedback-box');
+        feedbacks.forEach(f => {
+            f.style.display = 'none';
+            f.className = 'feedback-box';
+            f.innerHTML = '';
+        });
+
+        document.getElementById('resultBanner').style.display = 'none';
+
+        document.getElementById('answeredCount').innerText = '0';
+        document.getElementById('progressBar').style.width = '0%';
+        document.getElementById('scoreDisplay').innerText = 'الدرجة: -';
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
